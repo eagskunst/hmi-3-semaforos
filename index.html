@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proceso: 3 semáforos para una avenida</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="https://media.discordapp.net/attachments/863920042763485204/994791083219365998/707ef7f76635f59b3395a3ec739b7f26.png" type="image/x-icon">
+</head>
+<style>
+
+    main {
+        padding: 20px;
+    }
+
+    body {
+        width: 100vw;
+        height: 100vh;
+        line-height: 1.6;
+        font-family: 'Lato';
+        background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+        -webkit-tap-highlight-color: transparent;
+        overflow-x: hidden;
+        font-size: 20px;
+    }
+    .trafficLight {
+        background-color: black;
+        width: 50px;
+        height: 150px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 5px;
+        border-radius: 10px;
+      }
+      .trafficLight span {
+        width: 45px;
+        height: 45px;
+        border-radius: 100%;
+        background-color: gray;
+        animation-duration: 5s;
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
+      }
+      .tls_container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+      }
+      .tl_container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .tl_name {
+        margin-bottom: 1em;
+      }
+      .pushable {
+        background: hsl(340deg 100% 32%);
+        border-radius: 12px;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        outline-offset: 4px;
+        display: block; 
+        margin-inline: auto;
+        width: max-content;
+        margin-bottom: 2em;
+      }
+      .front {
+        display: block;
+        padding: 12px 42px;
+        border-radius: 12px;
+        font-size: 1.25rem;
+        background: hsl(345deg 100% 47%);
+        color: white;
+        transform: translateY(-6px);
+      }
+    
+      .pushable:active .front {
+        transform: translateY(-2px);
+      }
+      h1 {
+        text-align: center;
+      }
+      .road {
+        width: 90vw;
+        height: 150px;
+        transform-style: preserve-3d;
+        transform-origin: bottom;
+        transform: perspective(500px) rotateX(60deg);
+        box-shadow: 0 0 30px 0 inset rgba(0, 0, 0, .7),
+            1px 40px 5px 5px rgba(0, 0, 0, .3);
+        background: #333;
+        margin: 0 auto;
+
+    }
+    
+    @keyframes animate-road {
+        from {
+            background-position: 0;
+        }
+        
+        to {
+            background-position: 120px;
+        }
+    }
+    
+    .road::after {
+        content: '';
+        display: flex;
+        position: absolute;
+        top: calc((100% - 16px) / 2);
+        left: 5%;
+        width: 90%;
+        height: 16px;
+        background-image: linear-gradient(to right, #FFF 0%, #FFF 70%, #333 70%, #333 100%);
+        background-size: 60px 100%;
+        animation: animate-road linear .6s infinite;
+    }
+    
+    .depth {
+        width: 100%;
+        height: 45px;
+        position: absolute;
+        left: 50%;
+        bottom: -30px;
+        transform: translateX(-50%);
+        background: linear-gradient(to bottom, #121212 90%, transparent);
+    }
+    .desc_title {
+        margin-top: 2em;
+    }
+</style>
+
+<body>
+    <main>
+        <h1> Proceso: 3 semáforos para una avenida</h1>
+        <div class="road">
+            <div class="depth"></div>
+        </div>
+        <h2 class="desc_title">Descripción</h2>
+        <p> En una avenida, con el objetivo de mejorar el tráfico,
+            se va a crear un proceso de tres semáforos. <br>
+            No se evaluaron los costos para este proceso, pero igual cabe resaltar que un PLC para un semáforo puede ser
+            muy costoso. <br>
+            Para cumplir el objetivo, se siguieron los siguientes pasos:
+            <ol>
+                <li>Seleccionar PLC que pudiera cumplir con la condición de las entradas y salidas para 3 semáforos.</li>
+                <li>Crear un diagrama de secuencia para conocer el estado de cada lámpara en el momento adecuado.</li>
+                <li>Crear diagrama de bloques en Graceft.</li>
+                <li>Transformar diagrama de bloques a uno diagrama en escalera en TwidoSuite.</li>
+            </ol>
+        </p>
+        <h2>Proceso</h2>
+        <p>El sistema posee un switch para activar/desactivar, que garantiza que cualquier interrupción que ocurra
+            permita reiniciar
+            el proceso desde cero. <br> El switch permite apagar el sistema en casos de mantenimiento.
+        </p>
+        <ol>
+            <li>Empieza con la luz verde en el semaforo 1 y el resto permanecera en rojo.</li>
+            <li>Transcurrido un tiempo arbirtrario, el semaforo 1 pasa a amarillo y el resto permanecera en rojo.</li>
+            <li>Transcurrido un tiempo arbitrario, el semaforo 1 pasa a rojo, el 2 a verde y el 3 se mantiene en rojo</li>
+            <li>Transcurrido un tiempo arbirtrario, el semaforo 2 pasa a amarillo y el resto permanecera en rojo.</li>
+            <li>Transcurrido un tiempo arbitrario, el semaforo 2 pasa a rojo, el 3 a verde y el 1 se mantiene en rojo</li>
+            <li>Transcurrido un tiempo arbirtrario, el semaforo 3 pasa a amarillo y el resto permanecera en rojo.</li>
+            <li>El proceso vuelve al estado inicial</li>
+        </ol>
+        <h2>Demostración</h2>
+        <button class="pushable" id="switch_btn">
+            <span class="front" id="switch_btn_text">
+                Switch
+            </span>
+          </button>
+        <div class="tls_container">
+            <div class="tl_container">
+                <h3 class="tl_name">Semáforo 1</h3>
+                <div class="trafficLight" id="tf1">
+                    <span class="red" id="red1"></span>
+                    <span class="yellow" id="yellow1"></span>
+                    <span class="green" id="green1"></span>
+                </div>
+            </div>
+            <div class="tl_container">
+                <h3 class="tl_name">Semáforo 2</h3>
+                <div class="trafficLight" id="tf2">
+                    <span class="red" id="red2"></span>
+                    <span class="yellow" id="yellow2"></span>
+                    <span class="green" id="green2"></span>
+                </div>
+            </div>
+            <div class="tl_container">
+                <h3 class="tl_name">Semáforo 3</h3>
+                <div class="trafficLight" id="tf3">
+                    <span class="red" id="red3"></span>
+                    <span class="yellow" id="yellow3"></span>
+                    <span class="green" id="green3"></span>
+                </div>
+            </div>
+        </div>
+        </div>
+    </main>
+</body>
+<script src="index.js"></script>
+</html>
